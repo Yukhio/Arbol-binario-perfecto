@@ -1,0 +1,38 @@
+/* Realización de una función respuesta (h,q) donde la h es la altura del árbol perfecto
+de los convertidores y q es la lista de enteros positivos  que devuelve una una lista de 
+estos mismos en p donde cada elemento p es una etiqueta de el convertirdor que se encuentra
+encima de los convertidores establecidos
+*/
+package arbol;
+import java.util.*;
+public class Arbol {
+public static List<Integer> respuesta(int h, List<Integer> q) {
+        List<Integer> p = new ArrayList<>();
+
+        // Construir el árbol binario perfecto
+        int maxLabel = (1 << h) - 1; //Damos de referencia el máximo
+        int[] tree = new int[maxLabel + 1];
+        for (int i = 1; i <= maxLabel; i++) {
+            tree[i] = i;
+        }
+
+        // Aquí vamos a encontrar los padres de los convertidores en la lista q
+        for (int label : q) {
+            int parent = (label % 2 == 0) ? label / 2 : (label - 1) / 2;
+            p.add((parent >= 1) ? tree[parent] : -1);
+        }
+
+        return p;
+    }
+    public static void main(String[] args) {
+        int h1 = 3;
+        List<Integer> convertidores1 = new ArrayList<>(Arrays.asList(7, 3, 5, 1));
+        List<Integer> resultado1 = respuesta(h1, convertidores1);
+        System.out.println(resultado1);
+
+        int h2 = 5;
+        List<Integer> convertidores2 = new ArrayList<>(Arrays.asList(19, 14, 28));
+        List<Integer> resultado2 = respuesta(h2, convertidores2);
+        System.out.println(resultado2);
+    }
+}
